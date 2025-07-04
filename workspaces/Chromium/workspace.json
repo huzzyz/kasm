@@ -1,7 +1,7 @@
 {
   "friendly_name": "Chromium (VA-API)",
   "description": "Chromium with AMD RX580 VA-API & GBM support",
-  "image_src": "https://raw.githubusercontent.com/huzzyz/kasm/main/chromium.png",
+  "image_src": "chromium.png",
   "categories": ["Browser"],
   "architecture": ["amd64"],
 
