@@ -1,34 +1,39 @@
 {
-  "description": "Chromium is a free and open-source browser, primarily developed and maintained by Google.",
-  "docker_registry": "https://index.docker.io/v1/",
+  "friendly_name": "Chromium (VA-API)",
+  "description": "Chromium with AMD RX580 VA-API & GBM support",
   "image_src": "chromium.png",
-  "run_config": {
-    "hostname": "kasm"
-  },
-  "exec_config": {
-    "go": {
-      "cmd": "bash -c '/dockerstartup/custom_startup.sh --go --url \"$KASM_URL\"'"
-    },
-    "assign": {
-      "cmd": "bash -c '/dockerstartup/custom_startup.sh --assign --url \"$KASM_URL\"'"
-    }
-  },
-  "categories": [
-    "Browser"
-  ],
-  "friendly_name": "Chromium",
-  "architecture": [
-    "amd64",
-    "arm64"
-  ],
+  "categories": ["Browser"],
+  "architecture": ["amd64"],
+
+  "docker_registry": "ghcr.io",
   "compatibility": [
     {
       "version": "1.17.x",
-      "image": "kasmweb/chromium:develop",
-      "uncompressed_size_mb": 2170,
-      "available_tags": [
-        "develop"
-      ]
+      "image": "ghcr.io/huzzyz/workspace-chrome-vaapi:1.17.0",
+      "uncompressed_size_mb": 2500,
+      "available_tags": ["1.17.0"]
     }
-  ]
+  ],
+
+  "run_config": {
+    "hostname": "kasm",
+    "environment": {
+      "HW3D": true,
+      "DRINODE": "/dev/dri/renderD129"
+    },
+    "devices": [
+      "/dev/dri/card1:/dev/dri/card1:rwm",
+      "/dev/dri/renderD129:/dev/dri/renderD129:rwm"
+    ]
+  },
+
+  "exec_config": {
+    "first_launch": {
+      "user": "root",
+      "cmd": "bash -c 'apt-get update && apt-get install -y mesa-va-drivers libva-drm2 libgbm1 vainfo && mkdir -p /tmp/.X11-unix && chmod 1777 /tmp/.X11-unix && chown -R kasm-user:kasm-user /dev/dri/*'"
+    }
+  },
+
+  "gpu_count": 0
 }
+
