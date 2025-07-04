@@ -4,8 +4,7 @@
   "image_src": "chromium.png",
   "categories": ["Browser"],
   "architecture": ["amd64"],
-
-  "docker_registry": "ghcr.io",
+  "docker_registry": "https://ghcr.io/v2/",
   "compatibility": [
     {
       "version": "1.17.x",
@@ -14,11 +13,10 @@
       "available_tags": ["1.17.0"]
     }
   ],
-
   "run_config": {
     "hostname": "kasm",
     "environment": {
-      "HW3D": true,
+      "HW3D": "true",
       "DRINODE": "/dev/dri/renderD129"
     },
     "devices": [
@@ -26,14 +24,11 @@
       "/dev/dri/renderD129:/dev/dri/renderD129:rwm"
     ]
   },
-
   "exec_config": {
     "first_launch": {
       "user": "root",
       "cmd": "bash -c 'apt-get update && apt-get install -y mesa-va-drivers libva-drm2 libgbm1 vainfo && mkdir -p /tmp/.X11-unix && chmod 1777 /tmp/.X11-unix && chown -R kasm-user:kasm-user /dev/dri/*'"
     }
   },
-
   "gpu_count": 0
 }
-
